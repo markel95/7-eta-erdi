@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<title>7 eta erdi avascriptekin</title>
+
+<script type="text/javascript" src="js/Card.js"></script>
+<script type="text/javascript" src="js/DisplayedCard.js"></script>
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/scriptaculous.js?load=effects"></script>
+
+<script type="text/javascript">
+
+var bankarenKartak = [];  
+var jokalariarenKartak = [];
+
+bankarenKartak.count = 0;  
+jokalariarenKartak.count = 0;
+
+var baraja = new baraja();
+
+var partidaJokatzen = false;
+
+var apustua;
+var apustuInput;
+var dirua;
+var moneyDisplay;
+var mezua;
+
+
+
+function prestatu(){
+    mezua = document.getElementById("mezua");
+    planto = document.getElementById("plantoBotoia");
+    bota = document.getElementById("botaBotoia");
+    jokoBerria = document.getElementById("jokoBerriaBotoia");
+    moneyDisplay = document.getElementById("dirua");
+    dirua = 100;
+    moneyDisplay.innerHTML = "€" + dirua;
+    apustuInput = document.getElementById("apustua");
+    apustuInput.value = 10;
+    apustuInput.disabled = false;
+    plantoBotoia.disabled = true;
+    botaBotoia.disabled = true;
+    jokoBerriaBotoia.disabled = false;
+}
+
+function dealCard(cards, runOnFinish, faceDown) {
+    var crd = deck.nextCard();
+    cards.count++;
+    if (faceDown)
+       cards[cards.count].setFaceDown();
+    else
+       cards[cards.count].setFaceUp();
+    cards[cards.count].setCard(crd);
+    new Effect.SlideDown(cards[cards.count].cardContainer, {
+       duration: 0.5,
+       queue: "end",
+       afterFinish: runOnFinish
+    });
+}
+
+function jokoBerria(){
+    if (!partidaJokatzen){
+        var apustuText = apustuInput.value;
+        if (! apustuText.match(/^[0-9]+$/) || apustuText < 1 || apustuText > dirua) {
+            mezua.innerHTML = "Apustuak 1 eta " + dirua + "bitartekoa izan behar du."
+            return;
+        }
+        apustuInput.disabled = true;
+        apustua = Number(apustuText);
+        for (var i = 1; i <= 5; i++) {
+          jokalariarenKartak[i].cardContainer.style.display = "none";
+          jokalariarenKartak[i].setFaceDown();
+          bankarenKartak[i].cardContainer.style.display = "none";
+          bankarenKartak[i].setFaceDown();
+        }
+        mezua.innerHTML = "Kartak Banatzen";
+        baraja.shuffle();
+        bankarenKartak.count = 0;
+        jokalariarenKartak.count = 0;
+        dealCard(jokalariarenKartak);
+        dealCard(bankarenKartak);
+        dealCard(jokalariarenKartak);
+        dealCard(bankarenKartak, function() {
+             plantoBotoia.disabled = false;
+             botaBotoia.disabled = false;
+             jokoBerriaBotoia.disabled = true;
+             partidaJokatzen = true;
+             var bankaTotal = getTotal(bankarenKartak);
+             var jokalariaTotal = getTotal(jokalariarenKartak);
+             if (bankaTotal == 7.5) {
+                if (jokalariaTotal == 7.5)
+                    amaiera(false, "Biok duzue 7.5 baina bankak irabazten du.");
+                else
+                    amaiera(false, "Bankak 7.5 du!!!!!!!!.");
+             }
+             else if (jokalariaTotal == 7.5)
+                amaiera(true, "7.5 duzu!!!!!!!!! :).");
+             else
+                mezua.innerHTML = jokalariaTotal +" duzu .  Bota edo Planto?";
+          }, true);
+   }
+}
+        
+window.onload=function(){
+    prestatu();
+};
+</script>
+</head>
+<body>
+<table align=center cellpadding=0 cellspacing=10 border=0;>
+<tr><td>
+<div style="position: relative; border: thick solid #FF0000; background-color: #000; width: 579px; height:500px">
+    <div style="position: absolute; left:20px; top:15px; color:#9F9; font-size:large">Bankaren kartak:</div>
+    <div id="dealer1" style="position: absolute; left: 50px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="dealer2" style="position: absolute; left: 150px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="dealer3" style="position: absolute; left: 250px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="dealer4" style="position: absolute; left: 350px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="dealer5" style="position: absolute; left: 450px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div style="position: absolute; left:20px; top:210px; color:#9F9; font-size:large">Zure kartak:</div>
+    <div id="player1" style="position: absolute; left: 50px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="player2" style="position: absolute; left: 150px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="player3" style="position: absolute; left: 250px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="player4" style="position: absolute; left: 350px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="player5" style="position: absolute; left: 450px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div style="position: absolute; left:20px; top: 410px; color:#9F9; font-size:large">Zure dirua:</div>
+    <div id="dirua" style="position: absolute; left: 70px; top:445px; color:#FF0000; font-size:x-large"></div>
+    <div id="apustua" style="position:absolute; left:300px; top:425px">
+       <span style="color:#9F9">Apustua:</span>&nbsp; <input type=text size=6 id="bet">
+    </div>
+</div>
+</td></tr>
+<tr><td align=center>
+<input type=button id="botaBotoia" value="Bota" onclick="bota()" disabled>
+<input type=button id="plantoBotoia" value="Planto" onclick="planto()" disabled>
+<input type=button id="jokoBerriaBotoia" value="Joko Berria" onClick="jokoBerria()">
+</td></tr>
+<tr><td align=center>
+<span id="mezua" style="color:#600; font-weight:bold">Ongi etorri 7 eta erdi jokora <br>Klikatu "Joko Berria" botoian hasteko.</span>
+</td></tr>
+</table>
+</body>
