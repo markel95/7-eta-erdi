@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>7 eta erdi avascriptekin</title>
+<title>7 eta erdi Javascriptekin</title>
 <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
 <style>
       body {
@@ -12,13 +12,17 @@
       }
     </style>
 <script type="text/javascript">
+
 var bankaTotal = 0;
 var jokalariaTotal = 0;
 var kartaBalorea;
 var random;
 var baraja =["basto","copa","espada","oro"];
-var dirua;
 var diruaDisplay;
+var dirua = 100;
+var apustua;
+var apustuaInput;
+
 function kartenBalorea(){
 
     switch (random) {
@@ -71,11 +75,29 @@ function kartenBalorea(){
     }
 }
 function money(){
-    diruaDisplay = document.getElementById("dirua");
-    dirua = 100;
+    
+    diruaDisplay = document.getElementById("diruaDiv");
     diruaDisplay.innerHTML = dirua + "€";
     
 }
+function apostatzen(){
+    apustua= document.getElementById("bet").value;
+    if(apustua==""){
+        mezua.innerHTML="APOSTATU EGIN BEHAR DUZU!!!!!";
+    }
+    else if(apustua>dirua){
+        mezua.innerHTML="EZ DAUKAZU HAINBESTE DIRURIK!!!!";
+    }
+    else{
+    apostatuBotoia.disabled = true;
+    botaBotoia.disabled = false;
+    plantoBotoia.disabled = false;
+    jokoBerriaBotoia.disabled = true;
+    mezua.innerHTML="";
+    }
+    console.log(apustua);
+}
+
 function kartak(){
     
     random = Math.floor( ( Math.random() * 40 ) + 1 );
@@ -105,28 +127,54 @@ function kartak(){
     }
     
     jokoBerriaBotoia.disabled = true;
-    botaBotoia.disabled = false;
-    plantoBotoia.disabled = false;
+    apostatuBotoia.disabled = false;
 }
 function jokoBerria(){
     bankaTotal = 0;
     jokalariaTotal = 0;
-    var jokalaria = document.getElementById("jokalaria");
-    var div = jokalaria.getElementsByTagName("div");
-    for ( var i = 0 ; i < div.length ; i++){
+    if(dirua==0){
+        mezua.innerHTML="OSO TXARRA ZEA!!! DIRU GUZTIA GALDU DUZU!!!! </br> BERRIZ JOKATZEKO 'JOKO BERRIA' BOTOIAN KLIKATU";
+        
+        apostatuBotoia.disabled = true;
+        botaBotoia.disabled = true;
+        plantoBotoia.disabled = true;
+        jokoBerriaBotoia.disabled = false;
+        
+        var jokalaria = document.getElementById("jokalaria");
+        var div = jokalaria.getElementsByTagName("div");
+        for ( var i = 0 ; i < div.length ; i++){
                 div[i].innerHTML="";
-                mezua.innerHTML="";
-            }
+        }
 
-    var banka = document.getElementById("banka");
-    var div = banka.getElementsByTagName("div");
-    for ( var i = 0 ; i < div.length ; i++){
+        var banka = document.getElementById("banka");
+        var div = banka.getElementsByTagName("div");
+        for ( var i = 0 ; i < div.length ; i++){
+                div[i].innerHTML="";
+        }
+    
+        apustua= document.getElementById("bet").value="";
+        dirua=0;
+    }
+    else{
+        var jokalaria = document.getElementById("jokalaria");
+        var div = jokalaria.getElementsByTagName("div");
+        for ( var i = 0 ; i < div.length ; i++){
                 div[i].innerHTML="";
                 mezua.innerHTML="";
-            }
+        }
+
+        var banka = document.getElementById("banka");
+        var div = banka.getElementsByTagName("div");
+        for ( var i = 0 ; i < div.length ; i++){
+                div[i].innerHTML="";
+                mezua.innerHTML="";
+        }
     
-    money();        
-    kartak();
+        apustua= document.getElementById("bet").value="";
+    
+        money();        
+        kartak();
+    }
 }
 function bota(){
     random = Math.floor( ( Math.random() * 40 ) + 1 );
@@ -136,7 +184,7 @@ function bota(){
     jokalariaTotal= jokalariaTotal + balioa;
     
     var jokalaria = document.getElementById("jokalaria");
-    var div = jokalaria.getElementsByTagName("DIV");
+    var div = jokalaria.getElementsByTagName("div");
     for ( var i = 0 ; i < div.length ; i++){
         if (div[i].innerHTML == ""){
             if(random <=10){
@@ -161,6 +209,8 @@ function bota(){
         jokoBerriaBotoia.disabled = false;
         
         jokalariaTotal=0;
+        
+        dirua= dirua-apustua;
         }
         
     if(jokalariaTotal == 7.5){
@@ -208,6 +258,8 @@ function planto(){
         plantoBotoia.disabled = true;
         jokoBerriaBotoia.disabled = false;
         mezua.innerHTML = "OOOOOOH GALDU EGIN DUZU!!!!! :("
+        
+        dirua= dirua-apustua;
     }
     else if(bankaTotal<7.5){
         setTimeout(planto,1500);
@@ -218,6 +270,7 @@ function planto(){
         plantoBotoia.disabled = true;
         jokoBerriaBotoia.disabled = false;
         
+        dirua= dirua + apustua;
     }
 
     
@@ -253,13 +306,14 @@ function planto(){
     <div id="jokalaria8" style="position: absolute; left: 750px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
     </div>
     <div style="position: absolute; left:20px; top: 410px; color:#fff; font-size:large">Zure dirua:</div>
-    <div id="dirua" style="position: absolute; left: 70px; top:445px; color:#FF0000; font-size:x-large"></div>
-    <div id="apustua" style="position:absolute; left:300px; top:425px">
+    <div id="diruaDiv" style="position: absolute; left: 70px; top:445px; color:#0000FF; font-size:x-large"></div>
+    <div id="apustuaDiv" style="position:absolute; left:300px; top:425px">
        <span style="color:#fff">Apustua:</span>&nbsp; <input type=text size=6 id="bet">
     </div>
 </div>
 </td></tr>
 <tr><td align=center>
+<input type=button id="apostatuBotoia" value="Apostatu" onclick="apostatzen()" disabled>
 <input type=button id="botaBotoia" value="Bota" onclick="bota()" disabled>
 <input type=button id="plantoBotoia" value="Planto" onclick="planto()" disabled>
 <input type=button id="jokoBerriaBotoia" value="Joko Berria" onClick="jokoBerria()">
