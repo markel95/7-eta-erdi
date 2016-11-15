@@ -11,7 +11,8 @@ var jokalariaTotal = 0;
 var kartaBalorea;
 var random;
 var baraja =["basto","copa","espada","oro"];
-var dirua=100;
+var dirua;
+var diruaDisplay;
 function kartenBalorea(){
 
     switch (random) {
@@ -63,6 +64,12 @@ function kartenBalorea(){
     
     }
 }
+function money(){
+    diruaDisplay = document.getElementById("dirua");
+    dirua = 100;
+    diruaDisplay.innerHTML = dirua + "€";
+    
+}
 function kartak(){
     
     random = Math.floor( ( Math.random() * 40 ) + 1 );
@@ -111,7 +118,8 @@ function jokoBerria(){
                 div[i].innerHTML="";
                 mezua.innerHTML="";
             }
-            
+    
+    money();        
     kartak();
 }
 function bota(){
@@ -120,7 +128,6 @@ function bota(){
     var balioa = kartenBalorea(random);
    
     jokalariaTotal= jokalariaTotal + balioa;
-    console.log(jokalariaTotal);
     
     var jokalaria = document.getElementById("jokalaria");
     var div = jokalaria.getElementsByTagName("DIV");
@@ -169,7 +176,6 @@ function planto(){
     var balioa = kartenBalorea(random);
    
     bankaTotal= bankaTotal + balioa;
-    console.log(bankaTotal);
     
     var banka = document.getElementById("banka");
     var div = banka.getElementsByTagName("div");
@@ -211,9 +217,7 @@ function planto(){
     
 }
 
-function money(){
-    
-}
+
 </script>
 </head>
 <body>
