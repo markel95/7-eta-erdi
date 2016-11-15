@@ -6,71 +6,121 @@
 <title>7 eta erdi avascriptekin</title>
 
 <script type="text/javascript">
-var bankaTotal;
-var jokalariaTotal;
+var bankaTotal = 0;
+var jokalariaTotal = 0;
 var kartaBalorea;
 var random;
 var baraja =["basto","copa","espada","oro"];
 function kartenBalorea(){
-    random = Math.floor((Math.random()*40) + 1);
-   /*
-    var zifra=random.toString().substring(random.length-1,random);
-    alert(zifra);
-    */
+
     switch (random) {
     case 1:
     case 11:
     case 21:
     case 31:
-        kartaBalorea= 1;
+       return kartaBalorea= 1;
         break;
     case 2:
     case 12:
     case 22:
     case 32:
-        kartaBalorea = 2;
+        return kartaBalorea = 2;
         break;
     case 3:
     case 13:
     case 23:
     case 33:
-        kartaBalorea = 3;
+        return kartaBalorea = 3;
         break;
     case 4:
     case 14:
     case 24:
     case 34:
-        kartaBalorea = 4;
+        return kartaBalorea = 4;
         break;
     case 5:
     case 15:
     case 25:
     case 35:
-        kartaBalorea = 5;
+        return kartaBalorea = 5;
         break;
     case 6:
     case 16:
     case 26:
     case 36:
-        kartaBalorea = 6;
+        return kartaBalorea = 6;
         break;
     case 7:
     case 17:
     case 27:
     case 37:
-        kartaBalorea = 7;
+        return Balorea = 7;
         break;
     default:
-        kartaBalorea = 0.5;
+        return kartaBalorea = 0.5;
 
     
-}
+    }
 }
 function kartak(){
+    
     random = Math.floor( ( Math.random() * 40 ) + 1 );
     var jokalaria = document.getElementById("jokalaria");
     var div = jokalaria.getElementsByTagName("div");
+    var balioa = kartenBalorea(random);
+    jokalariaTotal= jokalariaTotal + balioa;
+    console.log(jokalariaTotal);
+    for ( var i = 0 ; i < div.length ; i++){
+        if (div[i].innerHTML == ""){
+            if(random <=10){
+                div[i].innerHTML="<img class='trukito' src='img/"+baraja[0]+"/" + random + ".jpg'>";
+            }
+            else if (random <= 20){
+                div[i].innerHTML="<img class='trukito' src='img/"+baraja[1]+"/" + (random-10) + ".jpg'>";
+            }
+            else if (random <= 30 ){
+                div[i].innerHTML="<img class='trukito' src='/img/"+baraja[2]+"/" + (random-20) + ".jpg'>";
+            }
+            else{
+                div[i].innerHTML="<img class='trukito' src='img/"+baraja[3]+"/" + (random-30) + ".jpg'>";
+            }
+            break;
+        }
+
+    }
     
+    jokoBerriaBotoia.disabled = true;
+    botaBotoia.disabled = false;
+    plantoBotoia.disabled = false;
+}
+function jokoBerria(){
+    bankaTotal = 0;
+    jokalariaTotal = 0;
+    var jokalaria = document.getElementById("jokalaria");
+    var div = jokalaria.getElementsByTagName("div");
+    for ( var i = 0 ; i < div.length ; i++){
+                div[i].innerHTML="";
+                mezua.innerHTML="";
+            }
+
+    var banka = document.getElementById("banka");
+    var div = banka.getElementsByTagName("div");
+    for ( var i = 0 ; i < div.length ; i++){
+                div[i].innerHTML="";
+                mezua.innerHTML="";
+            }
+    kartak();
+}
+function bota(){
+    random = Math.floor( ( Math.random() * 40 ) + 1 );
+    
+    var balioa = kartenBalorea(random);
+   
+    jokalariaTotal= jokalariaTotal + balioa;
+    console.log(jokalariaTotal);
+    
+    var jokalaria = document.getElementById("jokalaria");
+    var div = jokalaria.getElementsByTagName("DIV");
     for ( var i = 0 ; i < div.length ; i++){
         if (div[i].innerHTML == ""){
             if(random <=10){
@@ -79,7 +129,56 @@ function kartak(){
             else if (random <= 20){
                 div[i].innerHTML="<img src='img/"+baraja[1]+"/" + (random-10) + ".jpg'>";
             }
-            else if (random < 30 ){
+            else if (random <= 30 ){
+                div[i].innerHTML="<img src='/img/"+baraja[2]+"/" + (random-20) + ".jpg'>";
+            }
+            else{
+                div[i].innerHTML="<img src='img/"+baraja[3]+"/" + (random-30) + ".jpg'>";
+            }
+            break;
+        }
+    }
+    if(jokalariaTotal>7.5){
+        mezua.innerHTML = "OOOOOOH GALDU EGIN DUZU!!!!!!!!!! 7.5etik pasatu zara.";
+        botaBotoia.disabled = true;
+        plantoBotoia.disabled = true;
+        jokoBerriaBotoia.disabled = false;
+        
+        jokalariaTotal=0;
+        }
+        
+    if(jokalariaTotal == 7.5){
+       mezua.innerHTML = "7.5 duzu!!!!!";
+       botaBotoia.disabled = true;
+        plantoBotoia.disabled = true;
+        jokoBerriaBotoia.disabled = false;
+        planto();
+    }
+    
+    
+    
+    
+}
+
+function planto(){
+    random = Math.floor( ( Math.random() * 40 ) + 1 );
+    
+    var balioa = kartenBalorea(random);
+   
+    bankaTotal= bankaTotal + balioa;
+    console.log(bankaTotal);
+    
+    var banka = document.getElementById("banka");
+    var div = banka.getElementsByTagName("div");
+    for ( var i = 0 ; i < div.length ; i++){
+        if (div[i].innerHTML == ""){
+            if(random <=10){
+                div[i].innerHTML="<img src='img/"+baraja[0]+"/" + random + ".jpg'>";
+            }
+            else if (random <= 20){
+                div[i].innerHTML="<img src='img/"+baraja[1]+"/" + (random-10) + ".jpg'>";
+            }
+            else if (random <= 30 ){
                 div[i].innerHTML="<img src='/img/"+baraja[2]+"/" + (random-20) + ".jpg'>";
             }
             else{
@@ -89,85 +188,57 @@ function kartak(){
         }
 
     }
-    jokoBerriaBotoia.disabled = true;
-    botaBotoia.disabled = false;
-    plantoBotoia.disabled = false;
-}
-function jokoBerria(){
-    kartenBalorea();
-    kartak();
-}
-function bota(){
-    random = Math.floor( ( Math.random() * 40 ) + 1 );
-    var jokalaria = document.getElementById("jokalaria");
-    var div = jokalaria.getElementsByTagName("div");
-    for ( var i = 0 ; i < div.length ; i++){
-        if (div[i].innerHTML == ""){
-            if(random <=10 ){
-                div[i].innerHTML="<img src='img/basto/" + random + ".jpg'>";
-            }
-            else if (random <= 20){
-                div[i].innerHTML="<img src='img/copa/" + (random-10) + ".jpg'>";
-            }
-            else if (random < 30 ){
-                div[i].innerHTML="<img src='/img/espada/" + (random-20) + ".jpg'>";
-            }
-            else{
-                div[i].innerHTML="<img src='img/oro/" + (random-30) + ".jpg'>";
-            }
-            break;
-        }
+    if(bankaTotal>=jokalariaTotal & bankaTotal<7.5){
+        botaBotoia.disabled = true;
+        plantoBotoia.disabled = true;
+        jokoBerriaBotoia.disabled = false;
+        mezua.innerHTML = "GALDU EGIN DUZU!!!!! :("
     }
-}
+    else if(bankaTotal<7.5){
+        setTimeout(planto,1500);
+    }
+    else if(bankaTotal>7.5){
+        mezua.innerHTML= "IRABAZI EGIN DUZU!!!!!!!!!!!! :) Banka 7.5etik pasatu da."
+        botaBotoia.disabled = true;
+        plantoBotoia.disabled = true;
+        jokoBerriaBotoia.disabled = false;
+        
+    }
 
-function planto(){
-    random = Math.floor( ( Math.random() * 40 ) + 1 );
-    var banka = document.getElementById("banka");
-    var div = banka.getElementsByTagName("div");
-    for ( var i = 0 ; i < div.length ; i++){
-        if (div[i].innerHTML == ""){
-            if(random <=10){
-                div[i].innerHTML="<img src='img/basto/" + random + ".jpg'>";
-            }
-            else if (random <= 20){
-                div[i].innerHTML="<img src='img/copa/" + (random-10) + ".jpg'>";
-            }
-            else if (random < 30 ){
-                div[i].innerHTML="<img src='/img/espada/" + (random-20) + ".jpg'>";
-            }
-            else{
-                div[i].innerHTML="<img src='img/oro/" + (random-30) + ".jpg'>";
-            }
-            break;
-        }
-    }
+    
 }
 </script>
 </head>
 <body>
 <table align=center cellpadding=0 cellspacing=10 border=0;>
 <tr><td>
-<div style="position: relative; border: thick solid #FF0000; background-color: #000; width: 579px; height:500px">
-    <div style="position: absolute; left:20px; top:15px; color:#9F9; font-size:large">Bankaren kartak:</div>
+<div style="position: relative; width:900px; height:600px; background-image:url(img/poker.jpg);background-repeat:no-repeat;background-size: 100% 100%;">
+    <div style="position: absolute; left:20px; top:15px; color:#fff; font-size:large">Bankaren kartak:</div>
     <div id="banka">
     <div id="banka1" style="position: absolute; left: 50px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="banka2" style="position: absolute; left: 150px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="banka3" style="position: absolute; left: 250px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="banka4" style="position: absolute; left: 350px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="banka5" style="position: absolute; left: 450px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="banka6" style="position: absolute; left: 550px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="banka7" style="position: absolute; left: 650px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="banka8" style="position: absolute; left: 750px; top:50px;  border: 2px solid #660; background-color: #FF0000"></div>
     </div>
-    <div style="position: absolute; left:20px; top:210px; color:#9F9; font-size:large">Zure kartak:</div>
+    <div style="position: absolute; left:20px; top:210px; color:#fff; font-size:large">Zure kartak:</div>
     <div id="jokalaria">
     <div id="jokalaria1" style="position: absolute; left: 50px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="jokalaria2" style="position: absolute; left: 150px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="jokalaria3" style="position: absolute; left: 250px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="jokalaria4" style="position: absolute; left: 350px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
     <div id="jokalaria5" style="position: absolute; left: 450px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="jokalaria6" style="position: absolute; left: 550px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="jokalaria7" style="position: absolute; left: 650px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
+    <div id="jokalaria8" style="position: absolute; left: 750px; top:250px;  border: 2px solid #660; background-color: #FF0000"></div>
     </div>
-    <div style="position: absolute; left:20px; top: 410px; color:#9F9; font-size:large">Zure dirua:</div>
+    <div style="position: absolute; left:20px; top: 410px; color:#fff; font-size:large">Zure dirua:</div>
     <div id="dirua" style="position: absolute; left: 70px; top:445px; color:#FF0000; font-size:x-large"></div>
     <div id="apustua" style="position:absolute; left:300px; top:425px">
-       <span style="color:#9F9">Apustua:</span>&nbsp; <input type=text size=6 id="bet">
+       <span style="color:#fff">Apustua:</span>&nbsp; <input type=text size=6 id="bet">
     </div>
 </div>
 </td></tr>
