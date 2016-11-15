@@ -11,6 +11,7 @@ var jokalariaTotal = 0;
 var kartaBalorea;
 var random;
 var baraja =["basto","copa","espada","oro"];
+var dirua=100;
 function kartenBalorea(){
 
     switch (random) {
@@ -65,24 +66,25 @@ function kartenBalorea(){
 function kartak(){
     
     random = Math.floor( ( Math.random() * 40 ) + 1 );
+    
     var jokalaria = document.getElementById("jokalaria");
     var div = jokalaria.getElementsByTagName("div");
     var balioa = kartenBalorea(random);
     jokalariaTotal= jokalariaTotal + balioa;
-    console.log(jokalariaTotal);
+    
     for ( var i = 0 ; i < div.length ; i++){
         if (div[i].innerHTML == ""){
             if(random <=10){
-                div[i].innerHTML="<img class='trukito' src='img/"+baraja[0]+"/" + random + ".jpg'>";
+                div[i].innerHTML="<img src='img/"+baraja[0]+"/" + random + ".jpg'>";
             }
             else if (random <= 20){
-                div[i].innerHTML="<img class='trukito' src='img/"+baraja[1]+"/" + (random-10) + ".jpg'>";
+                div[i].innerHTML="<img src='img/"+baraja[1]+"/" + (random-10) + ".jpg'>";
             }
             else if (random <= 30 ){
-                div[i].innerHTML="<img class='trukito' src='/img/"+baraja[2]+"/" + (random-20) + ".jpg'>";
+                div[i].innerHTML="<img src='/img/"+baraja[2]+"/" + (random-20) + ".jpg'>";
             }
             else{
-                div[i].innerHTML="<img class='trukito' src='img/"+baraja[3]+"/" + (random-30) + ".jpg'>";
+                div[i].innerHTML="<img  src='img/"+baraja[3]+"/" + (random-30) + ".jpg'>";
             }
             break;
         }
@@ -109,6 +111,7 @@ function jokoBerria(){
                 div[i].innerHTML="";
                 mezua.innerHTML="";
             }
+            
     kartak();
 }
 function bota(){
@@ -139,7 +142,7 @@ function bota(){
         }
     }
     if(jokalariaTotal>7.5){
-        mezua.innerHTML = "OOOOOOH GALDU EGIN DUZU!!!!!!!!!! 7.5etik pasatu zara.";
+        mezua.innerHTML = "OOOOOOH GALDU EGIN DUZU!!!!!!!!! :( 7.5etik pasatu zara.";
         botaBotoia.disabled = true;
         plantoBotoia.disabled = true;
         jokoBerriaBotoia.disabled = false;
@@ -192,7 +195,7 @@ function planto(){
         botaBotoia.disabled = true;
         plantoBotoia.disabled = true;
         jokoBerriaBotoia.disabled = false;
-        mezua.innerHTML = "GALDU EGIN DUZU!!!!! :("
+        mezua.innerHTML = "OOOOOOH GALDU EGIN DUZU!!!!! :("
     }
     else if(bankaTotal<7.5){
         setTimeout(planto,1500);
@@ -205,6 +208,10 @@ function planto(){
         
     }
 
+    
+}
+
+function money(){
     
 }
 </script>
