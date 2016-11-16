@@ -153,7 +153,8 @@ function jokoBerria(){
         }
     
         apustua= document.getElementById("bet").value="";
-        dirua=0;
+        diruaDisplay.innerHTML="";
+        dirua=100;
     }
     else{
         var jokalaria = document.getElementById("jokalaria");
@@ -270,7 +271,7 @@ function planto(){
         plantoBotoia.disabled = true;
         jokoBerriaBotoia.disabled = false;
         
-        dirua= dirua + apustua;
+        dirua= parseInt(dirua) + parseInt(apustua);
     }
 
     
